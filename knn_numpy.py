@@ -21,7 +21,7 @@ class KNN:
             norms.append([self.labels[n], norm])
 
         norms = np.array(sorted(norms, key=lambda x: x[1]), dtype=object)
-        counts = np.bincount(norms[:self.k, 0].astype('int64'))
+        counts = np.bincount(norms[:self.k, 0].astype('int32'))
         return np.argmax(counts)
 
 

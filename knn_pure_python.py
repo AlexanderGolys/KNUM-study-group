@@ -14,14 +14,18 @@ class KNN:
         self.labels = list(map(lambda x: x[0], labels))
 
     def predict(self, v):
-        norms = []
-        for n, vi in enumerate(self.data):
-            norm = sum((vi[i] - v[i])**2 for i in range(len(vi)))
-            norms.append([self.labels[n], norm])
+        # norms = []
+        # for n, vi in enumerate(self.data):
+        #     norm = sum((vi[i] - v[i])**2 for i in range(len(vi)))
+        #     norms.append([self.labels[n], norm])
 
-        norms = sorted(norms, key=lambda x: x[1])[:self.k]
-        labels = list(map(lambda x: x[0], norms))
-        return max(set(labels), key=labels.count)
+        # norms = [[self.labels[n], sum((vi[i] - v[i])**2 for i in range(len(vi)))] for n, vi in enumerate(self.data)]
+        # norms = sorted(norms, key=lambda x: x[1])[:self.k]
+        # # labels = list(map(lambda x: x[0], norms))
+        # labels = list(zip(*norms))[0]
+        # return max(set(labels), key=labels.count)
+
+        return max(set(map(lambda x: x[0], sorted([[self.labels[n], sum((vi[i] - v[i])**2 for i in range(len(vi)))] for n, vi in enumerate(self.data)], key=lambda x: x[1])[:self.k])), key=list(map(lambda x: x[0], sorted([[self.labels[n], sum((vi[i] - v[i])**2 for i in range(len(vi)))] for n, vi in enumerate(self.data)], key=lambda x: x[1])[:self.k])).count)
 
 
 if __name__ == '__main__':
